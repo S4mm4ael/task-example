@@ -1,0 +1,69 @@
+.Header, .Header__logo,
+.Header__person
+{
+  display:flex;
+  align-items:center;
+}
+.Header{
+  width:100%;
+  height:105px;
+  padding:32px 0px 15px 0 ;
+  justify-content:space-between;
+}
+.Header__logo{
+  width:165px;
+  gap:8px;
+}
+.Header__text
+{
+  font-weight:700;
+  font-size:20px;
+}
+.Header__title{
+  margin-left:120px;
+  margin-right:auto;
+  font-weight:700;
+  font-size:32px;
+  line-height:40px;
+}
+.Header__person{
+  gap:14px;
+}
+.Header__person p{
+  font-size:14px;
+}
+@media screen and (max-width:1109px) {
+  .Header{
+    padding-left:10px;
+    padding-right:10px;
+    width:100%;;
+  }
+}
+@media screen and (max-width:946px) {
+  .Header{
+    display:flex;
+    justify-content:center;
+    padding:25px 10px 26px 67px;
+    width:100%;;
+  }
+  .Header__logo,
+  .Header__person{
+    display:none;
+  }
+  .Header__title{
+    margin-left:24px;
+  }
+}
+@media screen and (max-width:550px) {
+  .Header{
+    justify-content:flex-start;
+    padding:35px 0px 26px 16px;
+    height:28px;
+  }
+  .Header__title{
+    font-size:18px;
+    line-height:28px;
+  }
+
+
+}

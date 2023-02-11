@@ -1,0 +1,16 @@
+.SliderBook__sliderItem img{
+  border-radius:10px;
+  border:1px solid #BFC4C9;
+}
+.SliderBook__thumbSlider{
+  margin-top:16px;
+}
+.SliderBook__thumbItem{
+  cursor:pointer;
+}
+.SliderBook__thumbItem img{
+  margin:0 auto;
+  border:1px solid #BFC4C9;
+  border-radius:3px;
+}
+

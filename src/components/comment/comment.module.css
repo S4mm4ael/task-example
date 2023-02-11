@@ -1,0 +1,78 @@
+.Comment__user{
+  display:flex;
+  gap:24px;
+  align-items:center;
+  font-size:16px;
+  line-height:24px;
+  color:#727272;
+}
+.Comment__commentItem{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.Comment__rating{
+  display:flex;
+  flex-direction:column;
+  width:350px;
+  font-weight:700;
+  font-size:18px;
+  gap:18px;
+  line-height:28px;
+}
+.Comment__ratingStars{
+  display:flex;
+  flex-direction:row;
+  gap:12px;
+}
+.Comment__userInfo{
+  display:flex;
+  gap:24px;
+}
+.Comment__commentText{
+  font-size:16px;
+  line-height:24px;
+  letter-spacing:0.2px;
+}
+@media screen and (max-width:1110px) {
+  .Comment__commentSection button{
+    width:100%;
+  }
+}
+@media screen and (max-width:660px) {
+  .Comment__ratingStars img{
+    height:34px;
+  } .Comment__ratingStars span{
+    display:block;
+    padding-left:16px;
+    margin:auto 0;
+  }
+  .Comment__commentItem img{
+    height:24px;
+  }
+  .Comment__userInfo{
+    flex-direction:column;
+  }
+  .Comment__userInfo span {
+    font-size:15px;
+    line-height:20px;
+  }
+  .Comment__user img {
+    width:32px;
+    height:32px;
+  }
+  .Comment__comments h5{
+    height:36px;
+  }
+  .Comment__commentText{
+    font-size:15px;
+    line-height:20px;
+  }
+  .Comment__commentList{
+    gap:32px;
+  }
+  .Comment__commentItem{
+    gap:14px;
+  }
+}
+
