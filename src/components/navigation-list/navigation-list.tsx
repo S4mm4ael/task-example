@@ -19,26 +19,17 @@ export function NavigationList() {
   const isMenuOpen: boolean = useSelector((state: RootState) => state.interfaceReducer.isGenreMenuOpen);
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 945);
 
-  const updateMedia = () => {
-    setDesktopSize(window.innerWidth > 945);
-  };
-
-  const handleClickOutside = () => {
-
-    if (isBurgerOpen) {
-      dispatch({ type: 'IS_BURGER_OPEN', payload: false });
-    }
-  };
-
   useEffect(() => {
+    const updateMedia = () => {
+      setDesktopSize(window.innerWidth > 945);
+    };
+
     window.addEventListener('resize', updateMedia);
 
     return () => window.removeEventListener('resize', updateMedia);
   }, []);
 
-
   return (
-
     <div
       data-test-id='burger-navigation'
       className={classNames(
@@ -50,8 +41,9 @@ export function NavigationList() {
       <ul className={styles.NavigationList__list}>
         <li className={styles.NavigationList__item}>
           <div
-            className={`${styles.NavigationList__subtitle} ${location.pathname === '/books' && `${styles.NavigationList__title_active}`
-              }`}
+            className={`${styles.NavigationList__subtitle} ${
+              location.pathname === '/books' && `${styles.NavigationList__title_active}`
+            }`}
           >
             {' '}
             <Link
@@ -82,8 +74,9 @@ export function NavigationList() {
               to='/books'
               data-test-id={isDesktopSize ? 'navigation-books' : 'burger-books'}
               onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })}
-              className={`${styles.NavigationList__subtitle} ${location.pathname === '/books' && `${styles.NavigationList__booksItem_active}`
-                }`}
+              className={`${styles.NavigationList__subtitle} ${
+                location.pathname === '/books' && `${styles.NavigationList__booksItem_active}`
+              }`}
             >
               Все книги
             </Link>
@@ -103,8 +96,9 @@ export function NavigationList() {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: true });
             }}
-            className={`${styles.NavigationList__subtitle} ${location.pathname === '/terms' && `${styles.NavigationList__title_active}`
-              }`}
+            className={`${styles.NavigationList__subtitle} ${
+              location.pathname === '/terms' && `${styles.NavigationList__title_active}`
+            }`}
           >
             Правила пользования
           </Link>
@@ -117,8 +111,9 @@ export function NavigationList() {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: true });
             }}
-            className={`${styles.NavigationList__subtitle} ${location.pathname === '/contract' && `${styles.NavigationList__title_active}`
-              }`}
+            className={`${styles.NavigationList__subtitle} ${
+              location.pathname === '/contract' && `${styles.NavigationList__title_active}`
+            }`}
           >
             Договор оферты
           </Link>
@@ -131,8 +126,9 @@ export function NavigationList() {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: false });
             }}
-            className={`${styles.NavigationList__subtitle} ${location.pathname === '/profile' && `${styles.NavigationList__title_active}`
-              }`}
+            className={`${styles.NavigationList__subtitle} ${
+              location.pathname === '/profile' && `${styles.NavigationList__title_active}`
+            }`}
           >
             Профиль
           </Link>
@@ -151,6 +147,5 @@ export function NavigationList() {
         </li>
       </ul>
     </div>
-
   );
 }

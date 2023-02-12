@@ -11,27 +11,24 @@ import data from '../../utils/data.json';
 import styles from './main-page.module.css';
 
 export function MainPage() {
-  const [isList, setIsList] = useState<boolean>(false);
+  const [isListView, setIsList] = useState<boolean>(false);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interfaceReducer.isBurgerOpen);
 
-  function renderBooksCards() {
-    const array = data.books;
-
-    return array.map((el) => (
+  const renderBooks = () =>
+    data.books.map((book) => (
       <Card
-        key={Math.random()}
-        id={el.id}
-        image={el.image}
-        author={el.author}
-        title={el.title}
-        rating={el.rating}
-        year={el.year}
-        isBooked={el.isBooked}
-        bookedTill={el.bookedTill}
-        isList={isList}
+        key={book.id}
+        id={book.id}
+        image={book.image}
+        author={book.author}
+        title={book.title}
+        rating={book.rating}
+        year={book.year}
+        isBooked={book.isBooked}
+        bookedTill={book.bookedTill}
+        isListView={isListView}
       />
     ));
-  }
 
   return (
     <section className={classNames(styles.MainPage, { [styles.MainPage_noScroll]: isBurgerOpen })}>
@@ -39,11 +36,13 @@ export function MainPage() {
         <NavigationList />
       </div>
       <div className={styles.MainPage__right}>
-        <Search isList={isList} changeView={setIsList} />
+        <Search isListView={isListView} changeView={setIsList} />
         <div
-          className={isList ? `${styles.MainPage__books} ${styles.MainPage__books_list}` : `${styles.MainPage__books}`}
+          className={
+            isListView ? `${styles.MainPage__books} ${styles.MainPage__books_list}` : `${styles.MainPage__books}`
+          }
         >
-          {renderBooksCards()}
+          {renderBooks()}
         </div>
       </div>
     </section>

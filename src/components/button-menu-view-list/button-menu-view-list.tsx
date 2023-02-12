@@ -4,7 +4,7 @@ import { SearchProps } from '../../shared/types.interface';
 
 import styles from './button-menu-view-list.module.css';
 
-export function ButtonList({ isList, changeView }: SearchProps) {
+export function ButtonList({ isListView, changeView }: SearchProps) {
   return (
     <div className={styles.ButtonList} data-test-id='button-menu-view-list'>
       <button
@@ -14,7 +14,7 @@ export function ButtonList({ isList, changeView }: SearchProps) {
           changeView(true);
         }}
       >
-        <img className={styles.ButtonList__img} src={isList ? icon : iconInactive} alt='icon' />
+        <img className={styles.ButtonList__img} src={isListView ? icon : iconInactive} alt='icon' />
       </button>
     </div>
   );

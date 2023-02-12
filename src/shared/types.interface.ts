@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export type SearchProps = {
-  isList: boolean;
+  isListView: boolean;
   changeView: Dispatch<SetStateAction<boolean>>;
 };
 

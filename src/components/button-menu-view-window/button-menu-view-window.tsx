@@ -4,7 +4,7 @@ import { SearchProps } from '../../shared/types.interface';
 
 import styles from './button-menu-view-window.module.css';
 
-export function ButtonWindow({ isList, changeView }: SearchProps) {
+export function ButtonWindow({ isListView, changeView }: SearchProps) {
   return (
     <div className={styles.ButtonWindow} data-test-id='button-menu-view-window'>
       <button
@@ -14,7 +14,7 @@ export function ButtonWindow({ isList, changeView }: SearchProps) {
           changeView(false);
         }}
       >
-        <img className={styles.ButtonWindow__img} src={isList ? iconInactive : icon} alt='icon' />
+        <img className={styles.ButtonWindow__img} src={isListView ? iconInactive : icon} alt='icon' />
       </button>
     </div>
   );

@@ -8,7 +8,7 @@ import { SearchBar } from '../search-bar/search-bar';
 
 import styles from './search.module.css';
 
-export function Search({ isList, changeView }: SearchProps) {
+export function Search({ isListView, changeView }: SearchProps) {
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
   return (
@@ -20,8 +20,8 @@ export function Search({ isList, changeView }: SearchProps) {
           {' '}
           <SearchBar isSearching={isSearching} changeView={setIsSearching} />
           <div className={styles.Search__buttons}>
-            <ButtonWindow isList={isList} changeView={changeView} />
-            <ButtonList isList={isList} changeView={changeView} />
+            <ButtonWindow isListView={isListView} changeView={changeView} />
+            <ButtonList isListView={isListView} changeView={changeView} />
           </div>
         </React.Fragment>
       )}

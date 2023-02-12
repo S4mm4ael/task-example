@@ -12,20 +12,18 @@ export function Layout() {
 
   return (
     <div className='layout'>
-      {isBurgerOpen && <div role="presentation" className="Layout__shadowed" onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })} > </div>}
+      {isBurgerOpen && (
+        <div
+          role='presentation'
+          className='Layout__shadowed'
+          onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })}
+        >
+          {' '}
+        </div>
+      )}
       <Header />
       <Outlet />
       <Footer />
-
-      {
-        !isBurgerOpen &&
-        <React.Fragment>
-          <Header />
-          <Outlet />
-          <Footer />
-        </React.Fragment>
-      }
-    </div >)
-
+    </div>
+  );
 }
-

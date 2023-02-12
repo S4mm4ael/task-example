@@ -10,7 +10,7 @@ import { CardProps } from '../../shared/types.data';
 import styles from './card.module.css';
 
 export function Card(props: CardProps) {
-  if (props.isList) {
+  if (props.isListView) {
     return (
       <Link to={`/books/business/${props.image.toString()}`}>
         {' '}

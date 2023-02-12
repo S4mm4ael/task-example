@@ -7,5 +7,5 @@ export type CardProps = {
   year: number;
   isBooked: boolean;
   bookedTill: string | null;
-  isList: boolean;
+  isListView: boolean;
 };
