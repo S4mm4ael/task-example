@@ -9,5 +9,5 @@ export const initialState: CounterState = {
   isBurgerOpen: false,
   isGenreMenuOpen: false,
   isFetchError: false,
-  isLoading: true
+  isLoading:false
 };
