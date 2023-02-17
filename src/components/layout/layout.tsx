@@ -10,11 +10,12 @@ import { ModalError } from '../modal-error';
 
 export function Layout() {
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interfaceReducer.isBurgerOpen);
+  const isFetchError: boolean = useSelector((state: RootState) => state.interfaceReducer.isFetchError);
 
   return (
     <div className='layout'>
       {isBurgerOpen && <BurgerShadow />}
-      <ModalError />
+      {isFetchError && <ModalError />}
       <Header />
       <Outlet />
       <Footer />
