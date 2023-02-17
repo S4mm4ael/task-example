@@ -7,6 +7,9 @@
   right:0;
   z-index:102;
   background-color:rgba(0, 0, 0, 0.404);
-  backdrop-filter:blur(3px)
+  backdrop-filter:blur(3px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
