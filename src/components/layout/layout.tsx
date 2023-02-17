@@ -1,26 +1,20 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
-import { AppDispatch, RootState } from '../../redux/store';
+import { RootState } from '../../redux/store';
+import { BurgerShadow } from '../burger-shadow';
 import { Footer } from '../footer';
 import { Header } from '../header';
+import { ModalError } from '../modal-error';
 
 export function Layout() {
-  const dispatch: AppDispatch = useDispatch();
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interfaceReducer.isBurgerOpen);
 
   return (
     <div className='layout'>
-      {isBurgerOpen && (
-        <div
-          role='presentation'
-          className='Layout__shadowed'
-          onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })}
-        >
-          {' '}
-        </div>
-      )}
+      {isBurgerOpen && <BurgerShadow />}
+      <ModalError />
       <Header />
       <Outlet />
       <Footer />

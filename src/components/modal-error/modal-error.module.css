@@ -1,0 +1,16 @@
+.ModalError{
+  position:absolute;
+  top:64px;
+  width:100%;
+  height:80px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  padding:24px 32px;
+  background:#FEEBEA;
+  border:1.5px solid #F42C4F;
+  gap:10px;
+  border-radius:5px;
+  z-index:101;
+}

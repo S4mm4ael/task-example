@@ -84,6 +84,7 @@ h5{
   line-height:28px;
 }
 .layout{
+  position:relative;
   max-width:1110px;
 }
 .layout-main-page,
@@ -116,11 +117,4 @@ h5{
   }
 
 }
-.Layout__shadowed{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:1;
-}
+
