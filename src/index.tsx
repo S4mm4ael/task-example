@@ -5,6 +5,7 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Layout } from './components/layout';
 import { LayoutMainPage } from './components/layout-main-page';
+import { LoadingScreen } from './components/loading-screen';
 import { ScrollToTop } from './hooks/scroll-to-top';
 import { BookPage } from './pages/book';
 import { MainPage } from './pages/main';

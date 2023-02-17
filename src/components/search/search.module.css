@@ -3,6 +3,9 @@
   align-items:center;
   justify-content:space-between;
 }
+.Search{
+  max-width:815px;
+}
 .Search__buttons{
   gap:12px
 }
