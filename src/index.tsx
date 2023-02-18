@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 
 import { Layout } from './components/layout';
 import { LayoutMainPage } from './components/layout-main-page';
-import { LoadingScreen } from './components/loading-screen';
 import { ScrollToTop } from './hooks/scroll-to-top';
 import { BookPage } from './pages/book';
 import { MainPage } from './pages/main';
 import { ProfilePage } from './pages/profile';
 import { TermsPage } from './pages/terms';
+import { booksApi } from './redux/features/books-slice';
 import { store } from './redux/store';
 
 import './index.css';
@@ -18,7 +19,7 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <React.StrictMode>
+  <ApiProvider api={booksApi}>
     <HashRouter>
       <ScrollToTop />
       <Provider store={store}>
@@ -37,5 +38,5 @@ root.render(
         </Routes>
       </Provider>
     </HashRouter>
-  </React.StrictMode>
+  </ApiProvider>
 );

@@ -1,21 +1,41 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { Card } from '../../components/card';
 import { NavigationList } from '../../components/navigation-list';
 import { Search } from '../../components/search';
-import { RootState } from '../../redux/store';
-import data from '../../utils/data.json';
+import { useGetAllBooksQuery } from '../../redux/features/books-slice';
+import { AppDispatch, RootState } from '../../redux/store';
+import { Books } from '../../shared/types.books';
+import dataMock from '../../utils/data.json';
 
 import styles from './main-page.module.css';
 
 export function MainPage() {
+  const dispatch: AppDispatch = useDispatch();
+
   const [isListView, setIsList] = useState<boolean>(false);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
 
+  const { data, error, isLoading } = useGetAllBooksQuery('');
+
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch({ type: 'IS_LOADING', payload: false });
+    }
+    if (isLoading) {
+      dispatch({ type: 'IS_LOADING', payload: true });
+    }
+    if (error) {
+      dispatch({ type: 'IS_FETCH_ERROR', payload: true });
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  });
+
   const renderBooks = () =>
-    data.books.map((book) => (
+    dataMock.books.map((book) => (
       <Card
         key={book.id}
         id={book.id}
