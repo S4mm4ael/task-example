@@ -1,7 +1,5 @@
-
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import classNames from 'classnames';
 
 import { RootState } from '../../redux/store';
 import { BurgerShadow } from '../burger-shadow';
@@ -11,9 +9,9 @@ import { LoadingScreen } from '../loading-screen';
 import { ModalError } from '../modal-error';
 
 export function Layout() {
-  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interfaceReducer.isBurgerOpen);
-  const isFetchError: boolean = useSelector((state: RootState) => state.interfaceReducer.isFetchError);
-  const isLoading: boolean = useSelector((state: RootState) => state.interfaceReducer.isLoading);
+  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
+  const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
+  const isLoading: boolean = useSelector((state: RootState) => state.interface.isLoading);
 
   return (
     <div className='layout'>

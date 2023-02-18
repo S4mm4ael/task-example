@@ -10,7 +10,7 @@ import { RootState } from '../../redux/store';
 import styles from './footer.module.css';
 
 export function Footer() {
-  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interfaceReducer.isBurgerOpen);
+  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
 
   return (
     <div className={classNames(styles.Footer, { [styles.Footer_noScroll]: isBurgerOpen })}>

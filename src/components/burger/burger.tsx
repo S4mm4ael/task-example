@@ -7,7 +7,7 @@ import styles from './burger.module.css';
 
 export function Burger() {
   const dispatch: AppDispatch = useDispatch();
-  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interfaceReducer.isBurgerOpen);
+  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
 
   const handleClick = () => {
     if (!isBurgerOpen) {

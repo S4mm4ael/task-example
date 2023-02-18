@@ -16,7 +16,7 @@ import styles from './book-page.module.css';
 export function BookPage() {
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 768);
   const [imageCount, setImageCount] = useState(4);
-  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interfaceReducer.isBurgerOpen);
+  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const location = useLocation();
   const updateMedia = () => {
     setDesktopSize(window.innerWidth > 768);

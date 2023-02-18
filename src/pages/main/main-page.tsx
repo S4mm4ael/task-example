@@ -12,7 +12,7 @@ import styles from './main-page.module.css';
 
 export function MainPage() {
   const [isListView, setIsList] = useState<boolean>(false);
-  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interfaceReducer.isBurgerOpen);
+  const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
 
   const renderBooks = () =>
     data.books.map((book) => (
