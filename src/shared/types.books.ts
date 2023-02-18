@@ -1,4 +1,4 @@
-export type Books = {
+export type Book = {
   issueYear: string;
   rating: number;
   title: string;

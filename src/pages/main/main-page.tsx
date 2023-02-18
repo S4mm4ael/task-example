@@ -7,7 +7,7 @@ import { NavigationList } from '../../components/navigation-list';
 import { Search } from '../../components/search';
 import { useGetAllBooksQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
-import { Books } from '../../shared/types.books';
+import { Book } from '../../shared/types.books';
 import dataMock from '../../utils/data.json';
 
 import styles from './main-page.module.css';
@@ -18,11 +18,12 @@ export function MainPage() {
   const [isListView, setIsList] = useState<boolean>(false);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
 
-  const { data, error, isLoading } = useGetAllBooksQuery('');
+  const { data: books = [], error, isLoading } = useGetAllBooksQuery('');
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && books) {
       dispatch({ type: 'IS_LOADING', payload: false });
+      console.log(books.forEach((book) => console.log(book.authors)));
     }
     if (isLoading) {
       dispatch({ type: 'IS_LOADING', payload: true });

@@ -1,11 +1,11 @@
-import { Books } from '../shared/types.books';
+import { Book } from '../shared/types.books';
 
 interface CounterState {
   isBurgerOpen: boolean;
   isGenreMenuOpen: boolean;
   isFetchError: boolean;
   isLoading: boolean;
-  booksData: Books[];
+  booksData: Book[];
 }
 
 export const initialState: CounterState = {
