@@ -6,12 +6,11 @@ import loader from './loader.json';
 import styles from './loading-screen.module.css';
 
 export function LoadingScreen() {
-
   return (
-    <div
-      role='presentation'
-      className={styles.LoadingScreen}
-    ><div><Lottie animationData={loader} height={69} width={69} /></div></div>
-  )
-
+    <div role='presentation' className={styles.LoadingScreen} data-test-id='loader'>
+      <div>
+        <Lottie animationData={loader} height={69} width={69} />
+      </div>
+    </div>
+  );
 }
