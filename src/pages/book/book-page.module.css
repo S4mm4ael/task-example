@@ -269,10 +269,7 @@
 .BookPage__listItem{
   gap:33px;
 }
-.BookPage__text
-.BookPage__bookIt{
-  margin:0 auto;
-}
+
 @media screen and (max-width:900px) {
   .BookPage__detailsRight
   .BookPage__listItemPValue{

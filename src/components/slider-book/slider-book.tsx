@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FreeMode, Navigation, Pagination, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperClass from 'swiper/types/swiper-class';
 
-import cover1 from '../../assets/img/book-cover-none.jpg';
-import cover2 from '../../assets/img/covers/cover-1.jpg';
-import cover3 from '../../assets/img/covers/cover-2.jpg';
-import cover4 from '../../assets/img/covers/cover-4.jpg';
-import cover5 from '../../assets/img/covers/cover-5.jpg';
+import noCover from '../../assets/img/book-cover-none.jpg';
 import { SliderProps } from '../../shared/types.interface';
 
 import styles from './slider-book.module.css';
@@ -18,24 +14,22 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import 'swiper/css/pagination';
 
-export function SliderBook({ isDesktopSize, imageCount }: SliderProps) {
+export function SliderBook({ isDesktopSize, images }: SliderProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [coversArray, setCoversArray] = useState([cover1, cover2, cover3, cover4, cover5]);
 
   function renderCoversSlider(className: string, height: number, thumb: boolean) {
-    if (imageCount === 0) {
+    if (images && images.length === 0) {
       return (
         <SwiperSlide data-test-id={thumb && 'slide-mini'} className={className}>
-          <img src={cover1} alt='cover' height={`${height}px`} />
+          <img src={noCover} alt='cover' height={`${height}px`} />
         </SwiperSlide>
       );
     }
-    const array = coversArray.slice(1, imageCount + 1);
 
-    return array.map((el) => (
+    return images.map((el) => (
       <SwiperSlide key={Math.random()} data-test-id={thumb && 'slide-mini'} className={className}>
-        <img src={el} alt='cover' height={`${height}px`} />
+        {el && <img src={`https://strapi.cleverland.by${el.url}`} alt='cover' height={`${height}px`} />}
       </SwiperSlide>
     ));
   }

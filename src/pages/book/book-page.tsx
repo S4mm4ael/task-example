@@ -1,52 +1,61 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 
 import strokeDown from '../../assets/svg/stroke-down-black.svg';
 import strokeUp from '../../assets/svg/stroke-up-black.svg';
 import { Comment } from '../../components/comment/comment';
 import { NavigationList } from '../../components/navigation-list';
 import { SliderBook } from '../../components/slider-book';
-import { RootState } from '../../redux/store';
+import { useGetBookQuery } from '../../redux/features/books-slice';
+import { AppDispatch, RootState } from '../../redux/store';
 import { renderStars } from '../../shared/render-stars';
-import data from '../../utils/comments.json';
+import { CommentBook } from '../../shared/types.books';
 
 import styles from './book-page.module.css';
 
 export function BookPage() {
+  const dispatch: AppDispatch = useDispatch();
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 768);
-  const [imageCount, setImageCount] = useState(4);
+  const [isCommentsOpen, setIsCommentsOpen] = useState<boolean>(true);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
-  const location = useLocation();
+  const { bookId } = useParams();
+
+  const { data: book, error, isLoading } = useGetBookQuery(`${bookId}`);
+
   const updateMedia = () => {
     setDesktopSize(window.innerWidth > 768);
   };
 
-  const [isCommentsOpen, setIsCommentsOpen] = useState<boolean>(true);
-
+  useEffect(() => {
+    if (!isLoading && book) {
+      dispatch({ type: 'IS_LOADING', payload: false });
+    }
+    if (isLoading) {
+      dispatch({ type: 'IS_LOADING', payload: true });
+    }
+    if (error) {
+      dispatch({ type: 'IS_FETCH_ERROR', payload: true });
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  });
   useEffect(() => {
     window.addEventListener('resize', updateMedia);
 
     return () => window.removeEventListener('resize', updateMedia);
   }, []);
 
-  useEffect(() => {
-    if (location.pathname === '/books/business/0') {
-      setImageCount(0);
-    }
-    if (location.pathname === '/books/business/1') {
-      setImageCount(1);
-    }
-    if (location.pathname === '/books/business/4') {
-      setImageCount(4);
-    }
-  }, [location.pathname]);
-
-  function renderComments() {
-    const array = data.comments;
-
-    return array.map((el) => (
-      <Comment key={Math.random()} avatar={undefined} name={el.name} rating={el.rating} date={el.date} text={el.text} />
+  function renderComments(comments: CommentBook[]) {
+    return comments.map((comment) => (
+      <Comment
+        key={comment.id}
+        avatar={comment.user.avatarUrl}
+        name={comment.user.firstName + comment.user.lastName}
+        rating={comment.rating}
+        date={comment.createdAt}
+        text={comment.text}
+      />
     ));
   }
 
@@ -57,16 +66,16 @@ export function BookPage() {
         {isDesktopSize ? (
           <React.Fragment>
             <Link to='/'>
-              <span>Бизнес книги</span>
+              <span>{book?.categories[0]} книги</span>
             </Link>{' '}
-            /<span>Грокаем алгоритмы. Иллюстрированное пособие для программистов и любопытствующих</span>
+            /<span>{book?.title}</span>
           </React.Fragment>
         ) : (
           <div className={styles.BookPage__route_tablet}>
             <Link to='/'>
-              <span>Бизнес книги</span>
+              <span>{book?.categories[0]} книги</span>
             </Link>{' '}
-            / Грокаем алгоритмы. Иллюстрированное пособие для программистов и любопытствующих
+            / {book?.title}
           </div>
         )}
       </div>
@@ -74,33 +83,20 @@ export function BookPage() {
         {isDesktopSize ? (
           <div className={styles.BookPage__bookWrapper}>
             <div className={styles.BookPage__slider}>
-              <SliderBook isDesktopSize={isDesktopSize} imageCount={imageCount} />
+              {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
             </div>
             <div className={styles.BookPage__text}>
-              <h1 className={styles.BookPage__title}>
-                Грокаем алгоритмы. Иллюстрированное пособие для программистов и любопытствующих
-              </h1>
+              <h1 className={styles.BookPage__title}>{book?.title}</h1>
               <div className={styles.BookPage__authors}>
-                <p>Адитья Бхаргава,</p>
-                <span>2019</span>
+                <p>{book?.authors.map((author) => `${author}, `)}</p>
+                <span>{book?.issueYear}</span>
               </div>
               <button type='button' className={`${styles.BookPage__bookIt}`}>
                 Забронировать
               </button>
               <div className={styles.BookPage__about}>
                 <h5>О книге</h5>
-                <article className={styles.BookPage__article}>
-                  <p>
-                    Алгоритмы — это всего лишь пошаговые алгоритмы решения задач, и большинство таких задач уже были
-                    кем-то решены, протестированы и проверены. Можно, конечно, погрузится в глубокую философию
-                    гениального Кнута, изучить многостраничные фолианты с доказательствами и обоснованиями, но хотите ли
-                    вы тратить на это свое время?
-                  </p>
-                  <p>
-                    Откройте великолепно иллюстрированную книгу и вы сразу поймете, что алгоритмы — это просто. А
-                    грокать алгоритмы — это веселое и увлекательное занятие.
-                  </p>
-                </article>
+                <article className={styles.BookPage__article}>{book?.description}</article>
               </div>
             </div>
           </div>
@@ -108,16 +104,13 @@ export function BookPage() {
           <div className={styles.BookPage__bookWrapper}>
             <div className={styles.BookPage__bookWrapper_tablet}>
               <div className={styles.BookPage__slider}>
-                <SliderBook isDesktopSize={isDesktopSize} imageCount={imageCount} />
+                {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
               </div>
               <div className={styles.BookPage__bookWrapperRight_tablet}>
-                <h1 className={styles.BookPage__title}>
-                  Грокаем алгоритмы. <br /> Иллюстрированное пособие для программистов и <br />
-                  любопытствующих
-                </h1>
+                <h1 className={styles.BookPage__title}>{book?.title}</h1>
                 <div className={styles.BookPage__authors}>
-                  <p>Адитья Бхаргава,</p>
-                  <span>2019</span>
+                  <p>{book?.authors.map((author) => `${author}, `)}</p>
+                  <span>{book?.issueYear}</span>
                 </div>
                 <button type='button' className={`${styles.BookPage__bookIt}`}>
                   Забронировать
@@ -127,18 +120,7 @@ export function BookPage() {
             <div className={styles.BookPage__text}>
               <div className={styles.BookPage__about}>
                 <h5>О книге</h5>
-                <article className={styles.BookPage__article}>
-                  <p>
-                    Алгоритмы — это всего лишь пошаговые алгоритмы решения задач, и большинство таких задач уже были
-                    кем-то решены, протестированы и проверены. Можно, конечно, погрузится в глубокую философию
-                    гениального Кнута, изучить многостраничные фолианты с доказательствами и обоснованиями, но хотите ли
-                    вы тратить на это свое время?
-                  </p>
-                  <p>
-                    Откройте великолепно иллюстрированную книгу и вы сразу поймете, что алгоритмы — это просто. А
-                    грокать алгоритмы — это веселое и увлекательное занятие.
-                  </p>
-                </article>
+                <article className={styles.BookPage__article}>{book?.description}</article>
               </div>
             </div>
           </div>
@@ -147,9 +129,11 @@ export function BookPage() {
       <div className={styles.BookPage__properties}>
         <div className={styles.BookPage__rating}>
           <h5>Рейтинг</h5>
-          <div className={styles.BookPage__ratingStars}>
-            {renderStars(4)} <span>4.3</span>
-          </div>
+          {book && (
+            <div className={styles.BookPage__ratingStars}>
+              {renderStars(book.rating)} <span>{book.rating}</span>
+            </div>
+          )}
         </div>
         <div className={styles.BookPage__details}>
           <h5>Подробная информация</h5>
@@ -158,23 +142,23 @@ export function BookPage() {
               <ul className={styles.BookPage__detailsList}>
                 <li className={styles.BookPage__listItem}>
                   <span className={styles.BookPage__listItemProperty}>Издательство</span>
-                  <span className={styles.BookPage__listItemPValue}>Питер</span>
+                  <span className={styles.BookPage__listItemPValue}>{book?.publish}</span>
                 </li>
                 <li className={styles.BookPage__listItem}>
                   <span className={styles.BookPage__listItemProperty}>Год издания</span>
-                  <span className={styles.BookPage__listItemPValue}>2019</span>
+                  <span className={styles.BookPage__listItemPValue}>{book?.issueYear}</span>
                 </li>
                 <li className={styles.BookPage__listItem}>
                   <span className={styles.BookPage__listItemProperty}>Страниц</span>
-                  <span className={styles.BookPage__listItemPValue}>288</span>
+                  <span className={styles.BookPage__listItemPValue}>{book?.pages}</span>
                 </li>
                 <li className={styles.BookPage__listItem}>
                   <span className={styles.BookPage__listItemProperty}>Переплёт</span>
-                  <span className={styles.BookPage__listItemPValue}>Мягкая обложка</span>
+                  <span className={styles.BookPage__listItemPValue}>{book?.cover}</span>
                 </li>
                 <li className={styles.BookPage__listItem}>
                   <span className={styles.BookPage__listItemProperty}>Формат</span>
-                  <span className={styles.BookPage__listItemPValue}>70х100</span>
+                  <span className={styles.BookPage__listItemPValue}>{book?.format}</span>
                 </li>
               </ul>
             </div>
@@ -182,21 +166,19 @@ export function BookPage() {
               <ul className={styles.BookPage__detailsList}>
                 <li className={styles.BookPage__listItem}>
                   <span className={styles.BookPage__listItemProperty}>Жанр</span>
-                  <span className={styles.BookPage__listItemPValue}>Компьютерная литература</span>
+                  <span className={styles.BookPage__listItemPValue}>{book?.categories.map((el) => `${el}`)}</span>
                 </li>
                 <li className={styles.BookPage__listItem}>
                   <span className={styles.BookPage__listItemProperty}>Вес</span>
-                  <span className={styles.BookPage__listItemPValue}>370 г</span>
+                  <span className={styles.BookPage__listItemPValue}>{book?.weight} г</span>
                 </li>
                 <li className={styles.BookPage__listItem}>
                   <span className={styles.BookPage__listItemProperty}>ISBN</span>
-                  <span className={styles.BookPage__listItemPValue}>978-5-4461-0923-4</span>
+                  <span className={styles.BookPage__listItemPValue}>{book?.ISBN}</span>
                 </li>
                 <li className={styles.BookPage__listItem}>
                   <span className={styles.BookPage__listItemProperty}>Изготовитель</span>
-                  <span className={styles.BookPage__listItemPValue}>
-                    ООО «Питер Мейл». РФ, 198 206, г. Санкт-Петербург, Петергофское ш, д. 73, лит. А29
-                  </span>
+                  <span className={styles.BookPage__listItemPValue}>{book?.producer}</span>
                 </li>
               </ul>
             </div>
@@ -205,7 +187,7 @@ export function BookPage() {
         <div className={styles.BookPage__comments}>
           <div className={styles.BookPage__commentsHeader}>
             <h5>
-              Отзывы <span className={styles.BookPage__commentsCount}>{data.comments.length}</span>
+              Отзывы <span className={styles.BookPage__commentsCount}>{book?.comments && book?.comments.length}</span>
             </h5>
             <button
               data-test-id='button-hide-reviews'
@@ -217,7 +199,9 @@ export function BookPage() {
             </button>
           </div>
           <div className={styles.BookPage__commentSection}>
-            <ul className={styles.BookPage__commentList}>{isCommentsOpen && renderComments()}</ul>
+            <ul className={styles.BookPage__commentList}>
+              {book?.comments ? isCommentsOpen && renderComments(book?.comments) : 'Комментариев пока нет'}
+            </ul>
             <button data-test-id='button-rating' type='button' className={`${styles.BookPage__bookIt}`}>
               Оценить книгу
             </button>

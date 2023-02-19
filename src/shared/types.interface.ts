@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { ImageBook } from './types.books'
+
 export type SearchProps = {
   isListView: boolean;
   changeView: Dispatch<SetStateAction<boolean>>;
@@ -12,7 +14,7 @@ export type SearchBarProps = {
 
 export type SliderProps = {
   isDesktopSize: boolean;
-  imageCount: number;
+  images:ImageBook[] ;
 };
 
 export type CommentProps = {

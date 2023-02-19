@@ -11,7 +11,7 @@ export function Comment({ avatar, name, rating, date, text }: CommentProps) {
         <img src={avatar ? `${avatar}` : avatarDefault} alt='avatar' />
         <div className={styles.Comment__userInfo}>
           <span>{name}</span>
-          <span>{date}</span>
+          <span>{date.slice(0, 10)}</span>
         </div>
       </div>
       <div className={styles.Comment__ratingStars}>{renderStars(rating)}</div>

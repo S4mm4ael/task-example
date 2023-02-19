@@ -1,9 +1,9 @@
-export type Book = {
+export interface Book {
   issueYear: string;
   rating: number;
   title: string;
   authors: string[];
-  image: Image;
+  image: ImageBook;
   categories: string[];
   id: string;
   booking: null | Booking;
@@ -11,7 +11,7 @@ export type Book = {
   histories: null | Histories;
 }
 
-type Image = {
+export type ImageBook = {
   url: string;
 }
 
@@ -44,10 +44,43 @@ export type BookCard = {
   bookItem: Book;
   isListView: boolean;
 }
+
 export interface Category  {
   name:string;
   path:string;
-  id: string,
+  id: string;
 }
 
+export interface ExactBook extends Book {
+  description: string;
+  publish: string;
+  pages: number;
+  cover: string;
+  weight: string;
+  format: string;
+  ISBN: string;
+  producer: string;
+  comments: Comment[];
+  user: User;
+  images: ImageBook[];
+}
 
+interface Comment  {
+  id: number;
+  rating: number;
+  text: string;
+  createdAt: string;
+  user: User
+}
+
+type User = {
+  commentUserId: number;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+
+}
+
+export interface CommentBook extends Comment{
+user: User;
+}

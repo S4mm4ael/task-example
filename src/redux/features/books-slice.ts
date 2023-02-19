@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { Book, Category } from '../../shared/types.books'
+import { Book, Category, ExactBook } from '../../shared/types.books'
 
 const baseUrl='https://strapi.cleverland.by'
 const booksUrl='/api/books'
@@ -13,7 +13,7 @@ export const booksApi = createApi({
     getAllBooks: builder.query<Book[], string>({
       query: () => booksUrl,
     }),
-    getBook: builder.query<Book, string>({
+    getBook: builder.query<ExactBook, string>({
       query: (id) =>`${booksUrl}/${id}` ,
     }),
     getCategories
