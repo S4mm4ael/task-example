@@ -9,15 +9,57 @@ import styles from './card.module.css';
 
 export function Card(props: BookCard) {
   const { id, image, authors, title, issueYear, rating, booking, categories } = props.bookItem;
-  const genre = categories[0];
+  const category = categories[0];
 
   function Truncate(string: string, amount: number) {
     return string.length > amount ? `${string.substring(0, amount - 3)}...` : string;
   }
 
+  function definePath(genre: string) {
+    let path = '';
+
+    switch (genre) {
+      case 'Бизнес':
+        path = 'business';
+        break;
+      case 'Психология':
+        path = 'psychology';
+        break;
+      case 'Родителям':
+        path = 'parents';
+        break;
+      case 'Нон-фикшн':
+        path = 'non-fiction';
+        break;
+      case 'Художественная литература':
+        path = 'fiction';
+        break;
+      case 'Программирование':
+        path = 'programming';
+        break;
+      case 'Хобби':
+        path = 'hobby';
+        break;
+      case 'Дизайн':
+        path = 'design';
+        break;
+      case 'Детские':
+        path = 'childish';
+        break;
+      case 'Другое':
+        path = 'other';
+        break;
+
+      default:
+        break;
+    }
+
+    return path;
+  }
+
   if (props.isListView) {
     return (
-      <Link to={`/books/${genre}/${id}`}>
+      <Link to={`/books/:${definePath(category)}/${id}`}>
         {' '}
         <div id={id} className={`${styles.Card} ${styles.Card_list}`} data-test-id='card'>
           {image && <img src={`https://strapi.cleverland.by${image.url}`} alt='book-cover' width='120px' />}
@@ -57,7 +99,7 @@ export function Card(props: BookCard) {
   }
 
   return (
-    <Link to={`/books/${genre}/${id}`}>
+    <Link to={`/books/:${definePath(category)}/${id}`}>
       {' '}
       <div id={id} className={styles.Card} data-test-id='card'>
         <div className={styles.Card__image}>
