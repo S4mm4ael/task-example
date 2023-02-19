@@ -5,9 +5,10 @@ import classNames from 'classnames';
 
 import strokeDown from '../../assets/svg/stroke-down.svg';
 import strokeUp from '../../assets/svg/stroke-up.svg';
+import { useGetCategoriesQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
+import { Category } from '../../shared/types.books';
 
-import { categories } from './categories';
 import { CategoryItem } from './category-item';
 
 import styles from './navigation-list.module.css';
@@ -17,7 +18,6 @@ export function NavigationList() {
   const location = useLocation();
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const isMenuOpen: boolean = useSelector((state: RootState) => state.interface.isGenreMenuOpen);
-  const isLoading: boolean = useSelector((state: RootState) => state.interface.isLoading);
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 945);
 
   useEffect(() => {
@@ -29,6 +29,22 @@ export function NavigationList() {
 
     return () => window.removeEventListener('resize', updateMedia);
   }, []);
+  const { data: categories = [], error, isLoading } = useGetCategoriesQuery('');
+
+  useEffect(() => {
+    if (error) {
+      dispatch({ type: 'IS_FETCH_ERROR', payload: true });
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  });
+
+  const renderCategories = () =>
+    categories?.map((category: Category) => (
+      <li key={category.path + category.id}>
+        <CategoryItem name={category.name} path={category.path} id={category.id} />
+      </li>
+    ));
 
   return (
     <div
@@ -82,11 +98,7 @@ export function NavigationList() {
               Все книги
             </Link>
 
-            {categories.map((el) => (
-              <li key={el.genreEng + el.count}>
-                <CategoryItem genreEng={el.genreEng} genre={el.genre} count={el.count} />
-              </li>
-            ))}
+            {renderCategories()}
           </ul>
         </li>
         <li className={styles.NavigationList__item}>

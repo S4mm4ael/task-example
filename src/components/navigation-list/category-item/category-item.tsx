@@ -3,16 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 import { AppDispatch } from '../../../redux/store';
+import { Category } from '../../../shared/types.books';
 
 import styles from '../navigation-list.module.css';
 
-type CategoryProps = {
-  genreEng: string;
-  genre: string;
-  count: number;
-};
-
-export function CategoryItem({ genreEng, genre, count }: CategoryProps) {
+export function CategoryItem({ name, path, id }: Category) {
   const location = useLocation();
   const dispatch: AppDispatch = useDispatch();
 
@@ -20,27 +15,23 @@ export function CategoryItem({ genreEng, genre, count }: CategoryProps) {
     <React.Fragment>
       <pre
         className={`${styles.NavigationList__booksItem} ${
-          location.pathname === `/books/:${genreEng}` && `${styles.NavigationList__booksItem_active}`
+          location.pathname === `/books/:${path}` && `${styles.NavigationList__booksItem_active}`
         }`}
       >
-        <Link onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })} to={`/books/:${genreEng}`}>
-          {genre}
+        <Link onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })} to={`/books/:${path}`}>
+          {name}
         </Link>
       </pre>
       <span
         className={`${styles.NavigationList__booksItemCount}
+    ${name === 'humor' ? styles.NavigationList__booksItemCount_lower : styles.NavigationList__booksItemCount_standart}
     ${
-      genreEng === 'humor'
-        ? styles.NavigationList__booksItemCount_lower
-        : styles.NavigationList__booksItemCount_standart
-    }
-    ${
-      genreEng === 'nonfiction'
+      name === 'non-fiction'
         ? styles.NavigationList__booksItemCount_lower
         : styles.NavigationList__booksItemCount_standart
     }`}
       >
-        {count}
+        {id}
       </span>
     </React.Fragment>
   );

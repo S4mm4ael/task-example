@@ -17,7 +17,7 @@ export const booksApi = createApi({
       query: (id) =>`${booksUrl}/${id}` ,
     }),
     getCategories
-    : builder.query<Category, string>({
+    : builder.query<Category[], string>({
       query: () => catUrl ,
     }),
   }),
