@@ -44,3 +44,9 @@ export type BookCard = {
   bookItem: Book;
   isListView: boolean;
 }
+export type Category = {
+  name:string;
+  path:string;
+  id: string;
+
+}

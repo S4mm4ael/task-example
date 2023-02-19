@@ -45,7 +45,7 @@ export function Card(props: BookCard) {
                 )}
                 {booking && booking.dateOrder && (
                   <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_unavailable}`}>
-                    Занята до {booking.dateOrder.slice(5, 10)}
+                    Занята до {booking.dateOrder.slice(8, 10)}.{booking.dateOrder.slice(5, 7)}
                   </button>
                 )}
               </div>
@@ -83,7 +83,7 @@ export function Card(props: BookCard) {
         )}
         {booking && booking.dateOrder && (
           <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_unavailable}`}>
-            Занята до {booking.dateOrder.slice(5, 10)}
+            Занята до {booking.dateOrder.slice(8, 10)}.{booking.dateOrder.slice(5, 7)}
           </button>
         )}
       </div>
