@@ -7,8 +7,6 @@ import { NavigationList } from '../../components/navigation-list';
 import { Search } from '../../components/search';
 import { useGetAllBooksQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
-import { Book } from '../../shared/types.books';
-import dataMock from '../../utils/data.json';
 
 import styles from './main-page.module.css';
 
@@ -23,7 +21,7 @@ export function MainPage() {
   useEffect(() => {
     if (!isLoading && books) {
       dispatch({ type: 'IS_LOADING', payload: false });
-      console.log(books.forEach((book) => console.log(book.authors)));
+      // console.log(books.forEach((book) => console.log(book.authors)));
     }
     if (isLoading) {
       dispatch({ type: 'IS_LOADING', payload: true });
@@ -35,21 +33,7 @@ export function MainPage() {
     }
   });
 
-  const renderBooks = () =>
-    dataMock.books.map((book) => (
-      <Card
-        key={book.id}
-        id={book.id}
-        image={book.image}
-        author={book.author}
-        title={book.title}
-        rating={book.rating}
-        year={book.year}
-        isBooked={book.isBooked}
-        bookedTill={book.bookedTill}
-        isListView={isListView}
-      />
-    ));
+  const renderBooks = () => books.map((book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
 
   return (
     <section className={classNames(styles.MainPage, { [styles.MainPage_noScroll]: isBurgerOpen })}>

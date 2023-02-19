@@ -43,10 +43,10 @@
 .Card__title{
   display:flex;
   font-weight:600;
-  align-items:center;
   font-size:14px;
   line-height:18px;
   height:80px;
+
 }
 .Card__title_list{
   font-weight:700;

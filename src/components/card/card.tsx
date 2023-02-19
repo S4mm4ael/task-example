@@ -2,45 +2,50 @@ import { Link } from 'react-router-dom';
 
 import empty from '../../assets/img/book-cover-none.jpg';
 import emptyList from '../../assets/img/book-cover-none-list.jpg';
-import cover from '../../assets/img/book-cover-small.jpg';
-import coverList from '../../assets/img/book-cover-small-list.jpg';
 import { renderStars } from '../../shared/render-stars';
-import { CardProps } from '../../shared/types.data';
+import { BookCard } from '../../shared/types.books';
 
 import styles from './card.module.css';
 
-export function Card(props: CardProps) {
+export function Card(props: BookCard) {
+  const { id, image, authors, title, issueYear, rating, booking, categories } = props.bookItem;
+  const genre = categories[0];
+
+  function Truncate(string: string, amount: number) {
+    return string.length > amount ? `${string.substring(0, amount - 3)}...` : string;
+  }
+
   if (props.isListView) {
     return (
-      <Link to={`/books/business/${props.image.toString()}`}>
+      <Link to={`/books/${genre}/${id}`}>
         {' '}
-        <div id={props.id} className={`${styles.Card} ${styles.Card_list}`} data-test-id='card'>
-          <img src={props.image !== 0 ? coverList : emptyList} alt='book-cover' height='170px' />
+        <div id={id} className={`${styles.Card} ${styles.Card_list}`} data-test-id='card'>
+          {image && <img src={`https://strapi.cleverland.by${image.url}`} alt='book-cover' width='120px' />}
+          {!image && <img src={emptyList} alt='book-cover' height='170px' />}
           <div className={`${styles.Card__wrapper} ${styles.Card__wrapperList}`}>
             <div className={`${styles.Card__content} ${styles.Card__content_list}`}>
-              <h5 className={`${styles.Card__title} ${styles.Card__title_list}`}>{props.title}</h5>
+              <h5 className={`${styles.Card__title} ${styles.Card__title_list}`}>{Truncate(title, 85)}</h5>
               <p className={`${styles.Card__authors_list} ${styles.Card__authors}`}>
-                {props.author !== '' ? `${props.author} ,` : ''}
-                <span className={styles.Card__year}>{props.year}</span>
+                {authors.map((author) => `${author}`)}
+                <span className={styles.Card__year}>, {issueYear}</span>
               </p>
               <div className={`${styles.Card__wrapper} ${styles.Card__wrapper_list} ${styles.Card__wrapper_rating}`}>
                 <div className={`${styles.Card__rating} ${styles.Card__rating_list}`}>
-                  {props.rating !== 0 && renderStars(props.rating)}
-                  {props.rating === 0 && 'ещё нет оценок'}
+                  {rating ? renderStars(rating) : 'ещё нет оценок'}
                 </div>
-                {!props.isBooked && (
+                {!booking && (
                   <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_list}`}>
                     Забронировать
                   </button>
                 )}
-                {props.bookedTill === '0' && (
+                {booking?.order && !booking.dateOrder && (
                   <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_bookedList}`}>
                     Забронирована
                   </button>
                 )}
-                {props.isBooked && props.bookedTill !== '0' && (
+                {booking && booking.dateOrder && (
                   <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_unavailable}`}>
-                    Занята до {props.bookedTill}
+                    Занята до {booking.dateOrder.slice(5, 10)}
                   </button>
                 )}
               </div>
@@ -52,35 +57,33 @@ export function Card(props: CardProps) {
   }
 
   return (
-    <Link to={`/books/business/${props.image.toString()}`}>
+    <Link to={`/books/${genre}/${id}`}>
       {' '}
-      <div id={props.id} className={styles.Card} data-test-id='card'>
+      <div id={id} className={styles.Card} data-test-id='card'>
         <div className={styles.Card__image}>
-          <img src={props.image ? cover : empty} alt='book-cover' />
+          {image && <img src={`https://strapi.cleverland.by${image.url}`} alt='book-cover' height='174px' />}
+          {!image && <img src={empty} alt='book-cover' />}
         </div>
-        <div className={styles.Card__rating}>
-          {props.rating !== 0 && renderStars(props.rating)}
-          {props.rating === 0 && 'ещё нет оценок'}
-        </div>
+        <div className={styles.Card__rating}>{rating ? renderStars(rating) : 'ещё нет оценок'}</div>
         <div className={styles.Card__content}>
-          <h5 className={styles.Card__title}>{props.title}</h5>
+          <h5 className={styles.Card__title}>{Truncate(title, 41)}</h5>
           <p className={styles.Card__authors}>
-            {props.author}, <span className={styles.Card__year}>{props.year}</span>
+            {authors.map((author) => `${author}`)}, <span className={styles.Card__year}>{issueYear}</span>
           </p>
         </div>
-        {!props.isBooked && (
+        {!booking && (
           <button type='button' className={styles.Card__bookIt}>
             Забронировать
           </button>
         )}
-        {props.bookedTill === '0' && (
+        {booking?.order && !booking.dateOrder && (
           <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_booked}`}>
             Забронирована
           </button>
         )}
-        {props.isBooked && props.bookedTill !== '0' && (
+        {booking && booking.dateOrder && (
           <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_unavailable}`}>
-            Занята до {props.bookedTill}
+            Занята до {booking.dateOrder.slice(5, 10)}
           </button>
         )}
       </div>

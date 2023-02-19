@@ -5,7 +5,7 @@ export type Book = {
   authors: string[];
   image: Image;
   categories: string[];
-  id: number;
+  id: string;
   booking: null | Booking;
   delivery: null | Delievery;
   histories: null | Histories;
@@ -37,4 +37,10 @@ type Delievery = {
   recipientId: number;
   recipientFirstName: string;
   recipientLastName: string;
+}
+
+export type BookCard = {
+  key: string;
+  bookItem: Book;
+  isListView: boolean;
 }
