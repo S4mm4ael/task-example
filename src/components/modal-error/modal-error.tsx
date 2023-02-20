@@ -13,8 +13,6 @@ export function ModalError() {
 
   const isLoading: boolean = useSelector((state: RootState) => state.interface.isLoading);
 
-
-
   function closeModal() {
     if (refModal.current) {
       refModal.current.style.display = 'none'
@@ -23,7 +21,7 @@ export function ModalError() {
   }
 
   return (
-    <div ref={refModal} className={classNames(styles.ModalError, { [styles.ModalError_hidden]: isLoading })} data-test-id='error'>
+    <div ref={refModal} className={classNames(styles.ModalError)} data-test-id='error'>
       <img src={warning} alt='warning' />
       <p>Что-то пошло не так. Обновите страницу через некоторое время.</p>
       <button className={styles.ModalError__close} type='button' onClick={() => closeModal()}>

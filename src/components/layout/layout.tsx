@@ -17,7 +17,7 @@ export function Layout() {
     <div className='layout'>
       {isBurgerOpen && <BurgerShadow />}
       {isFetchError && <ModalError />}
-      {isLoading && <LoadingScreen />}
+      {isLoading && !isFetchError && <LoadingScreen />}
       <Header />
       <Outlet />
       <Footer />
