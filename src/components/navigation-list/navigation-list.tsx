@@ -18,7 +18,6 @@ export function NavigationList() {
   const location = useLocation();
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const isMenuOpen: boolean = useSelector((state: RootState) => state.interface.isGenreMenuOpen);
-
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 945);
 

@@ -56,3 +56,6 @@
   }
 
 }
+.ModalError_hidden{
+  visibility:hidden;
+}

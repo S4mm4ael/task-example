@@ -6,6 +6,8 @@ import loader from './loader.json';
 import styles from './loading-screen.module.css';
 
 export function LoadingScreen() {
+
+
   return (
     <div role='presentation' className={styles.LoadingScreen} data-test-id='loader'>
       <div>
