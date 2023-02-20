@@ -1,0 +1,126 @@
+.SearchBar,
+.SearchBar__sortWrapper{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.SearchBar{
+  gap:16px
+}
+.SearchBar__input{
+  width:350px;
+  caret-color:#F83600;
+  color:#A7A7A7;
+}
+.SearchBar__inputImg{
+  position:absolute;
+  right:16px;
+  top:12px;
+  height:16px;
+  width:16px;
+  background:#FFFFFF;
+  border:none;
+}
+.SearchBar__input,
+.SearchBar__sort{
+  height:38px;
+  border-radius:20px;
+  padding-left:40px;
+  border:none;
+  box-shadow:0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+  border-radius:599px;
+}
+.SearchBar__icon{
+  position:absolute;
+  left:16px;
+}
+.SearchBar__iconSort{
+  position:absolute;
+  left:16px;
+}
+.SearchBar__sort{
+  appearance:none;
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+  padding:8px 16px 8px 36px;
+  color:#A7A7A7;
+  cursor:pointer;
+}
+@media screen and (max-width:1109px) {
+  .SearchBar__input{
+    width:100%;
+  }
+  .SearchBar__sort{
+    width:30%;
+  }
+}
+@media screen and (max-width:768px) {
+  .SearchBar__input{
+    width:274px;
+  }
+  .SearchBar__sort{
+    width:150px
+  }
+}
+
+@media screen and (max-width:660px) {
+  .Search{
+    padding:0 16px;
+  }
+  .SearchBar__button_active{
+    display:none;
+  }
+  .SearchBar__input,
+  .SearchBar__sort{
+    padding:0;
+  }
+  .SearchBar__button{
+    width:32px;
+    height:32px;
+    background:#FFFFFF;
+    border:none;
+    box-shadow:0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+  }
+  .SearchBar__iconSort,
+  .SearchBar__icon{
+    left:8px;
+  }
+  .SearchBar__input,
+  .SearchBar__sort{
+    display:flex;
+    border-radius:20px;
+    width:32px;
+    height:32px;
+    box-shadow:0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+  }
+  .SearchBar__sortItem {
+    color:#fff;
+  }
+  .SearchBar__input{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    padding:5px 16px;
+    gap:8px;
+    width:288px;
+    height:38px;
+    box-shadow:0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+    border-radius:599px;
+  }
+  .SearchBar_active{
+    padding-left:0;
+    margin:0 auto;
+  }
+  .SearchBar__wrapper{
+    position:relative;
+  }
+  .SearchBar__input_hidden{
+    display:none;
+  }
+}

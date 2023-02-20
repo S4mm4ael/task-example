@@ -1,0 +1,41 @@
+.Burger {
+  display:none;
+  z-index:10;
+}
+@media screen and (max-width:946px) {
+  .Burger {
+    border:0;
+    background-color:transparent;
+    cursor:pointer;
+    display:block;
+  }
+  .Burger__line {
+    background-color:#000000;
+    display:block;
+    margin:5px 0;
+    height:2px;
+    width:26px;
+  }
+  .Burger_open .Burger__line:nth-child(1) {
+    transform:translateY(7px) rotate(45deg);
+  }
+  .Burger_open .Burger__line:nth-child(2) {
+    opacity:0;
+  }
+  .Burger_open .Burger__line:nth-child(3) {
+    transform:translateY(-7px) rotate(-45deg);
+  }
+  .Burger_open .Burger__line {
+    background:linear-gradient(231.58deg, #F83600 -53.35%, #F9D423 297.76%);
+    transition:all 0.1s ease-in;
+  }
+  .Burger__line {
+    background-color:#000000;
+    display:block;
+    margin:5px 0;
+    height:2px;
+    width:20px;
+  }
+
+
+}

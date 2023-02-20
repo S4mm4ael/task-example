@@ -1,0 +1,39 @@
+.Search, .Search__buttons{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.Search{
+  max-width:815px;
+}
+.Search__buttons{
+  gap:12px
+}
+@media screen and (max-width:768px) {
+  .Search{
+    max-width:640px;
+    margin:0 auto;
+  }
+  .Search__buttons{
+    gap:8px
+  }
+}
+@media screen and (max-width:660px) {
+  .Search{
+    padding-left:16px;
+  }
+  .Search__input{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    padding:5px 16px;
+    gap:8px;
+    width:288px;
+    height:38px;
+    box-shadow:0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+    border-radius:599px;
+  }
+  .SearchBar_active{
+    padding:0;
+  }
+}
