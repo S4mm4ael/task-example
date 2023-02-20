@@ -18,6 +18,8 @@ export function NavigationList() {
   const location = useLocation();
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const isMenuOpen: boolean = useSelector((state: RootState) => state.interface.isGenreMenuOpen);
+
+  const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 945);
 
   useEffect(() => {
@@ -58,9 +60,8 @@ export function NavigationList() {
       <ul className={styles.NavigationList__list}>
         <li className={styles.NavigationList__item}>
           <div
-            className={`${styles.NavigationList__subtitle} ${
-              location.pathname === '/books' && `${styles.NavigationList__title_active}`
-            }`}
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/books' && `${styles.NavigationList__title_active}`
+              }`}
           >
             {' '}
             <Link
@@ -77,29 +78,30 @@ export function NavigationList() {
               type='button'
               className={styles.NavigationList__stroke}
             >
-              <img src={isMenuOpen ? strokeUp : strokeDown} alt='stroke' />
+              <img src={isMenuOpen || isFetchError ? strokeUp : strokeDown} alt='stroke' />
             </button>
           </div>
         </li>
         <li className={styles.NavigationList__item}>
-          <ul
-            className={classNames(styles.NavigationList__booksList, {
-              [styles.NavigationList__booksList_hidden]: isMenuOpen || isLoading,
-            })}
-          >
-            <Link
-              to='/books'
-              data-test-id={isDesktopSize ? 'navigation-books' : 'burger-books'}
-              onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })}
-              className={`${styles.NavigationList__subtitle} ${
-                location.pathname === '/books' && `${styles.NavigationList__booksItem_active}`
-              }`}
+          {!isFetchError &&
+            <ul
+              className={classNames(styles.NavigationList__booksList, {
+                [styles.NavigationList__booksList_hidden]: isMenuOpen || isLoading,
+              })}
             >
-              Все книги
-            </Link>
+              <Link
+                to='/books'
+                data-test-id={isDesktopSize ? 'navigation-books' : 'burger-books'}
+                onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })}
+                className={`${styles.NavigationList__subtitle} ${location.pathname === '/books' && `${styles.NavigationList__booksItem_active}`
+                  }`}
+              >
+                Все книги
+              </Link>
 
-            {renderCategories()}
-          </ul>
+              {renderCategories()}
+            </ul>}
+
         </li>
         <li className={styles.NavigationList__item}>
           <Link
@@ -109,9 +111,8 @@ export function NavigationList() {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: true });
             }}
-            className={`${styles.NavigationList__subtitle} ${
-              location.pathname === '/terms' && `${styles.NavigationList__title_active}`
-            }`}
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/terms' && `${styles.NavigationList__title_active}`
+              }`}
           >
             Правила пользования
           </Link>
@@ -124,9 +125,8 @@ export function NavigationList() {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: true });
             }}
-            className={`${styles.NavigationList__subtitle} ${
-              location.pathname === '/contract' && `${styles.NavigationList__title_active}`
-            }`}
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/contract' && `${styles.NavigationList__title_active}`
+              }`}
           >
             Договор оферты
           </Link>
@@ -139,9 +139,8 @@ export function NavigationList() {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: false });
             }}
-            className={`${styles.NavigationList__subtitle} ${
-              location.pathname === '/profile' && `${styles.NavigationList__title_active}`
-            }`}
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/profile' && `${styles.NavigationList__title_active}`
+              }`}
           >
             Профиль
           </Link>

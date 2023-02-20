@@ -15,6 +15,7 @@ export function MainPage() {
 
   const [isListView, setIsList] = useState<boolean>(false);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
+  const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
 
   const { data: books = [], error, isLoading } = useGetAllBooksQuery('');
 
@@ -41,7 +42,7 @@ export function MainPage() {
         <NavigationList />
       </div>
       <div className={styles.MainPage__right}>
-        <Search isListView={isListView} changeView={setIsList} />
+        {!isFetchError && <Search isListView={isListView} changeView={setIsList} />}
         <div
           className={
             isListView ? `${styles.MainPage__books} ${styles.MainPage__books_list}` : `${styles.MainPage__books}`
