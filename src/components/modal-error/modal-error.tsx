@@ -13,11 +13,7 @@ export function ModalError() {
 
   const isLoading: boolean = useSelector((state: RootState) => state.interface.isLoading);
 
-  useEffect(() => {
-    if (refModal.current) {
-      refModal.current.style.visibility = 'hidden'
-    }
-  }, [])
+
 
   function closeModal() {
     if (refModal.current) {
